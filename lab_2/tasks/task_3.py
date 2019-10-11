@@ -8,7 +8,12 @@ def unique(values):
     :return: Unique values in order of appear.
     :rtype: list
     """
-    pass
+    result = []
+    for i in values:
+        if i not in result:
+            result.append(i)
+
+    return result
 
 
 if __name__ == "__main__":

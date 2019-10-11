@@ -12,7 +12,17 @@ def stack_operation(stack_commands):
     :return: List of outputs from commands.
     :rtype: list
     """
-    pass
+    result = []
+    stack = []
+    for command in stack_commands:
+        if command[0] == 'push':
+            stack.append(command[1])
+        if command[0] == 'pop':
+            stack.pop()
+        if command[0] == 'show_max':
+            result.append(max(stack))
+
+    return result
 
 
 if __name__ == "__main__":
