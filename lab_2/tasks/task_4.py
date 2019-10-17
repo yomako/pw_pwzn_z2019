@@ -17,8 +17,12 @@ def count_letters(msg):
         else:
             chars_dict[c] += 1
 
-    print(sorted(chars_dict.keys()))
+    result = []
+    for key in chars_dict.keys():
+        if chars_dict[key] == max(chars_dict.values()):
+            result.append(key)
 
+    return sorted(result)[0], max(chars_dict.values())
 
 if __name__ == '__main__':
     msg = 'Abrakadabra'
