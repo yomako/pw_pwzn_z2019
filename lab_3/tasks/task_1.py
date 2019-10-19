@@ -12,8 +12,9 @@ def parse_input(input):
     :return: list of parsed list of integers
     :rtype: list
     """
-    print()
-    pass
+    string_pairs = list(filter(None, input.split('\n')))
+    int_pairs = list(map(lambda x: list(map(int, x.split(' '))), string_pairs))
+    return int_pairs
 
 
 _input = """

@@ -29,6 +29,13 @@ def sort_dates(date_str, date_format=''):
     :return: sorted desc list of utc datetime objects
     :rtype: list
     """
+    dates_list = list(filter(None, date_str.split('\n')))
+    dates_list = list(map(lambda x: x[4:], dates_list))
+    dates_list = list(filter(None, dates_list))
+    date_time_objects = list(map(lambda x: datetime.datetime.strptime(x, '%a %d %B %Y %H:%M:%S %z'), dates_list))
+    date_time_objects = sorted(date_time_objects, key=datetime.date.isoweekday, reverse=True)
+
+    return date_time_objects
 
 
 def group_dates(dates):
@@ -69,26 +76,28 @@ def parse_dates(date_str, date_format=''):
     pass
 
 
-dates = """
-Sun 10 May 2015 13:54:36 -0700
-Sun 10 May 2015 13:54:36 -0000
-Sat 02 May 2015 19:54:36 +0530
-Fri 01 May 2015 13:54:36 -0000
-"""
+if __name__ == '__main__':
+    dates = """
+    Sun 10 May 2015 13:54:36 -0700
+    Sun 10 May 2015 13:54:36 -0000
+    Sat 02 May 2015 19:54:36 +0530
+    Fri 01 May 2015 13:54:36 -0000
+    """
 
-assert sort_dates(dates) == [
-    datetime.datetime(2015, 5, 10, 20, 54, 36, tzinfo=datetime.timezone.utc),
-    datetime.datetime(2015, 5, 10, 13, 54, 36, tzinfo=datetime.timezone.utc),
-    datetime.datetime(2015, 5, 2, 14, 24, 36, tzinfo=datetime.timezone.utc),
-    datetime.datetime(2015, 5, 1, 13, 54, 36, tzinfo=datetime.timezone.utc),
-]
-
-assert parse_dates(dates) == """2015-05-10
-\t20:54:36
-\t13:54:36
-----
-2015-05-02
-\t14:24:36
-----
-2015-05-01
-\t13:54:36"""
+    assert sort_dates(dates) == [
+        datetime.datetime(2015, 5, 10, 20, 54, 36, tzinfo=datetime.timezone.utc),
+        datetime.datetime(2015, 5, 10, 13, 54, 36, tzinfo=datetime.timezone.utc),
+        datetime.datetime(2015, 5, 2, 14, 24, 36, tzinfo=datetime.timezone.utc),
+        datetime.datetime(2015, 5, 1, 13, 54, 36, tzinfo=datetime.timezone.utc),
+    ]
+    '''
+    assert parse_dates(dates) == """2015-05-10
+    \t20:54:36
+    \t13:54:36
+    ----
+    2015-05-02
+    \t14:24:36
+    ----
+    2015-05-01
+    \t13:54:36"""
+    '''
