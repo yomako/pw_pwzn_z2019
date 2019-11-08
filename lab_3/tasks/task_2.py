@@ -49,4 +49,4 @@ _input = """
 
 """
 if __name__ == '__main__':
-    assert check_frequency(_input) == [0, 1]
+    assert check_frequency(_input) == [0, 0]
