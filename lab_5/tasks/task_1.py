@@ -7,7 +7,6 @@ Podnoszone wyjątki:
 jak i operację z argumentem domyślnym) - EmptyMemory
 - dzielenie przez zero jest przekształcane w CalculatorError
 """
-#mhm
 from operator import add, mul, sub, truediv
 
 
