@@ -25,6 +25,7 @@ tzn. Square dziediczy i z Diamond i Rectangle.
 klasy Square o takich przekątnych lub None (jeżeli przekątne nie są równe).
 - Zwiąż ze sobą atrybuty a, b, e i f w klasie Square.
 """
+from math import pi, sqrt
 
 
 class Figure:
@@ -34,30 +35,137 @@ class Figure:
     def perimeter(self):
         raise NotImplementedError
 
-    def name(self):
-        raise NotImplementedError
+    @classmethod
+    def name(cls):
+        return cls.__name__
 
     def __str__(self):
         return (
-            f'{self.name()}: area={self.area():.3f}, '
-            f'perimeter={self.perimeter():.3f}'
+            f'{self.name()}: area={self.area:.3f}, '
+            f'perimeter={self.perimeter:.3f}'
         )
 
 
-class Circle:
-    pass
+class Circle(Figure):
+    def __init__(self, r):
+        self.r = r
+        super().__init__()
+
+    @property
+    def area(self):
+        return pi * self.r ** 2
+
+    @property
+    def perimeter(self):
+        return 2 * pi * self.r
+
+    @staticmethod
+    def get_area(r):
+        return pi * r ** 2
+
+    @staticmethod
+    def get_perimeter(r):
+        return 2 * pi * r
 
 
-class Rectangle:
-    pass
+class Rectangle(Figure):
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
+        super()
+
+    @property
+    def area(self):
+        return self.a * self.b
+
+    @property
+    def perimeter(self):
+        return 2 * (self.a + self.b)
+
+    @staticmethod
+    def get_area(a, b):
+        return a * b
+
+    @staticmethod
+    def get_perimeter(a, b):
+        return 2 * (a + b)
 
 
-class Square:
-    pass
+class Diamond(Figure):
+    def __init__(self, e, f):
+        self.e = e
+        self.f = f
+        super()
+
+    def are_diagonals_equal(self):
+        return self.e == self.f
+
+    def to_square(self):
+        if self.are_diagonals_equal():
+            return Square(self.e/sqrt(2))
+        else:
+            return None
+
+    @property
+    def area(self):
+        return (self.e * self.f) / 2
+
+    @property
+    def perimeter(self):
+        return 4 * sqrt((self.e / 2)**2 + (self.f / 2)**2)
+
+    @staticmethod
+    def get_area(e, f):
+        return (e * f) / 2
+
+    @staticmethod
+    def get_perimeter(e, f):
+        return 4 * sqrt((e / 2)**2 + (f / 2)**2)
 
 
-class Diamond:
-    pass
+class Square(Diamond, Rectangle):
+    __a = None
+    __b = None
+
+    def __init__(self, a):
+        self.a = a
+        self.b = a
+        self.e = a * sqrt(2)
+        self.f = a * sqrt(2)
+
+    @property
+    def a(self):
+        return self.__a
+
+    @property
+    def b(self):
+        return self.__b
+
+    @a.setter
+    def a(self, a):
+        self.__a = a
+        self.__b = a
+
+    @b.setter
+    def b(self, b):
+        self.__a = b
+        self.__b = b
+
+    @property
+    def area(self):
+        return self.a ** 2
+
+    @property
+    def perimeter(self):
+        return 4 * self.a
+
+    @staticmethod
+    def get_area(a):
+        return a ** 2
+
+    @staticmethod
+    def get_perimeter(a):
+        return 4 * a
 
 
 if __name__ == '__main__':
